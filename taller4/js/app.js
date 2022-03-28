@@ -20,18 +20,18 @@ const showData = ({ squadName, homeTown, formed, members }) => {
     // mostrarlos
     const title = document.getElementById('title')
     title.innerText = squadName
-    
+
     const subtitle = document.getElementById('subtitle')
     subtitle.innerHTML = `<h3><b>HomeTown: </b>${homeTown} | <b>Formed: </b>${formed}</h3>`
-    
+
     // obtener los miembros y mostrar los datos:
     // nombre, identidad secreta, edad, poderes
     members.forEach((hero) => {
         const { name, secretIdentity, age, powers } = hero;
         let col = document.createElement("div");
         col.classList = "col";
-    
-        let contenido = `<h2>${name}</h2> 
+
+        let contenido = `<h2>${name}</h2>
         <p><b>Secret Identity:</b> ${secretIdentity}</p>
         <p><b>Age:</b> ${age}</p>
         <p><b>Superpowers:</b></p>
@@ -39,7 +39,7 @@ const showData = ({ squadName, homeTown, formed, members }) => {
 
         </ul>
         `;
-    
+
         col.innerHTML = contenido;
         document.querySelector("#container").appendChild(col);
 
@@ -54,5 +54,5 @@ const showData = ({ squadName, homeTown, formed, members }) => {
 
             superPowers.appendChild(li)
         })
-      });
+    });
 }
