@@ -10,56 +10,39 @@ const getEmplyeesData = async () => {
 
 getEmplyeesData().then(response => {
     users = [...response]
-    console.log(getPersonalData())
-    // loadTable()
+    loadTable()
+    loadCompanyData()
 })
 
 const getPersonalData = () => {
-
-    const personalData = users.map(user => {
+    return users.map(user => {
         return {
             nombre: user.name,
             correo: user.email,
-            telefono: user.phone
+            telefono: user.phone,
+            calle: user.address.street,
+            direccion: user.address.suite,
+            ciudad: user.address.city,
+            latitud: user.address.geo.lat,
+            longitud: user.address.geo.lng
         }
     })
-
-    return personalData
-
-    // const personalData = []
-    // users.map(user => {
-    //     const {
-    //         name: nombre,
-    //         email,
-    //         phone,
-    //         address: {
-    //             street,
-    //             suite,
-    //             city,
-    //             geo: { lat, lng }
-    //         }
-    //     } = user
-
-    //     personalData.push({
-    //         nombre,
-    //         correo: email,
-    //         telefono: phone,
-    //         calle: street,
-    //         direccion: suite,
-    //         latitud: lat,
-    //         longitud: lng,
-    //         ciudad: city,
-    //     })
-    // })
-    // return personalData
 }
 
+const getCompanyData = () => {
+    return users.map(user => {
+        return {
+            nombreEmpresa: user.company.name,
+            slogan: user.company.catchPhrase
+        }
+    })
+}
 
 const loadTable = () => {
     let container = document.querySelector('#cuerpoTabla')
     let data = getPersonalData()
 
-    data.map(item => {
+    data.forEach(item => {
         const {
             nombre,
             correo,
@@ -74,7 +57,7 @@ const loadTable = () => {
         let tr = document.createElement('tr')
         let content = `
         <td>${nombre}</td>
-        td>${correo}</td>
+        <td>${correo}</td>
         <td>${telefono}</td>
         <td>${calle} - ${direccion} (Coord: ${latitud}, ${longitud})</td>
         <td>${ciudad}</td>
@@ -82,5 +65,27 @@ const loadTable = () => {
 
         tr.innerHTML = content
         container.appendChild(tr)
+    })
+}
+
+const loadCompanyData = () => {
+    const container = document.querySelector('#containerQuotes')
+    const companyData = getCompanyData()
+
+    companyData.forEach(item => {
+        const { nombreEmpresa, slogan } = item
+
+        const figure = document.createElement('figure')
+        const content = `
+        <blockquote class="blockquote">
+        <p>${slogan}</p>
+        </blockquote>
+        <figcaption class="blockquote-footer">
+        ${nombreEmpresa}
+        </figcaption>
+        `
+
+        figure.innerHTML = content
+        container.appendChild(figure)
     })
 }
